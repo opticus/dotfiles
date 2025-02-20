@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Load Sick bash scripts
-#source /etc/bash.bashrc
+source /etc/bash.bashrc
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -119,9 +119,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-#source ~/.fzf/plugin/fzf-git.sh
+source ~/.fzf/plugin/fzf-git.sh
 
-#export STARSHIP_CONFIG=/mnt/c/Users/schotmi/.config/starship.toml
+export STARSHIP_CONFIG=/mnt/c/Users/schotmi/.config/starship.toml
 prompt off
 eval "$(starship init zsh)"
 
@@ -155,4 +155,5 @@ eval "$(starship init zsh)"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 
