@@ -15,7 +15,12 @@ RUN apt-get update && apt-get install -y \
     git \
     sudo \
     zsh \
+    locales \
     && rm -rf /var/lib/apt/lists/*
+
+# UTF-8 locales installieren und konfigurieren
+RUN locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8
 
 # Benutzer erstellen und Berechtigungen setzen
 RUN useradd -ms /bin/bash ${USERNAME} && \
@@ -38,7 +43,7 @@ RUN git clone --depth 1 https://github.com/junegunn/fzf.git ${USER_HOME}/.fzf &&
     ${USER_HOME}/.fzf/install --all
 
 # Starship prompt installieren
-RUN curl -sS https://starship.rs/install.sh | sh
+RUN curl -sS https://starship.rs/install.sh | sh -s -- --yes
 
 # Starship-Konfigurationsdatei kopieren
 COPY starship.toml ${USER_HOME}/.config/starship.toml
@@ -47,4 +52,14 @@ COPY .zshrc ${USER_HOME}/.zshrc
 RUN ln -s /mnt/host-home/.zsh_history ${USER_HOME}/.zsh_history
 
 # Zsh als Standard-Shell setzen
-RUN chsh -s $(which zsh)
+USER root
+RUN chsh -s $(which zsh) ${USERNAME}
+USER ${USERNAME}
+
+################
+## User setup
+################
+
+## Register new script as container start point -- this allows the container
+#  to block attempts to start it directly via "docker run"
+ENTRYPOINT ["/bin/bash", "/makeuser.sh"]

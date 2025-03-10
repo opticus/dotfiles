@@ -21,11 +21,11 @@ $conda\
 $env_var\
 $custom\
 $os\
+$container\
 $sudo\
 $cmd_duration\
 $jobs\
 $status\
-$container\
 $line_break\
 $shell\
 $character"""
@@ -55,10 +55,15 @@ cmd_indicator = ""
 
 [os]
 disabled = false
-format = "[](fg:prim_2)[$symbol]($style)[](fg:prim_2)"
+format = "[](fg:sec_3)[$symbol]($style)[](fg:sec_3)"
 symbols.Windows = " "
 symbols.Ubuntu  = " "
-style = 'bg:prim_2 fg:sec_3'
+style = 'bg:sec_3 fg:sec_1'
+
+[container]
+format = '[](fg:sec_3)[$symbol \[$name\]]($style)[](fg:sec_3)' 
+symbol = ''
+style = 'bg:sec_3 fg:sec_1'
 
 [git_branch]
 format = '[](fg:#29315A)[ $symbol$branch(:$remote_branch)]($style)'
@@ -106,8 +111,9 @@ style = 'bg:orangebg fg:bluesat'
 
 [custom.wsl]
 format = '[](fg:sec_3)[$output ]($style)[](fg:sec_3)'
-command = "echo   $WSL_DISTRO_NAME"
-when = "env.WSL_DISTRO_NAME != ''"
+#command = "echo   $WSL_DISTRO_NAME"
+command = "echo  "
+when = 'echo $WSL_DISTRO_NAME'
 os = 'linux'
 style = 'bg:sec_3 fg:sec_1'
 
@@ -115,6 +121,7 @@ style = 'bg:sec_3 fg:sec_1'
 format = '[](fg:prim_3)[$symbol]($style)[](fg:prim_3)'
 disabled = false
 style = 'bg:prim_3 fg:prim_2'
+
 
 
 [palettes.blue]

@@ -117,7 +117,7 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-
+export FZF_DEFAULT_OPTS='--height 40% --tmux bottom,40% --layout reverse --border top'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source ~/.fzf/plugin/fzf-git.sh
 
@@ -132,7 +132,8 @@ eval "$(starship init zsh)"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_IN.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -155,5 +156,16 @@ eval "$(starship init zsh)"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Alias for eza
+alias ll='eza -lah -o  --no-permissions --icons --git --color-scale --group-directories-first'
+
+# Set the environment variable for eza theme
+export EZA_CONFIG="$HOME/.config/eza/theme.toml"
+
+# Initialize zoxide
+eval "$(zoxide init zsh)"
+
+KEYTIMEOUT=1000
 
 

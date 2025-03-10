@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Install Zsh
+if ! command -v zsh &> /dev/null; then
+    echo "Zsh is not installed. Installing..."
+    sudo apt update
+    sudo apt install -y zsh
+else
+    echo "Zsh is already installed."
+fi
+
+# Install Git
+if ! command -v git &> /dev/null; then
+    echo "Git is not installed. Installing..."
+    sudo apt install -y git
+else
+    echo "Git is already installed."
+fi
+
+# Install fzf from Git repository
+if ! command -v fzf &> /dev/null; then
+    echo "fzf is not installed. Installing from Git repository..."
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all
+else
+    echo "fzf is already installed."
+fi
+
+# Install fzf-git.sh
+if [ ! -f "$HOME/.fzf/plugin/fzf-git.sh" ]; then
+    echo "fzf-git.sh is not installed. Downloading..."
+    mkdir -p $HOME/.fzf/plugin
+    curl -o $HOME/.fzf/plugin/fzf-git.sh https://raw.githubusercontent.com/junegunn/fzf-git.sh/master/fzf-git.sh
+else
+    echo "fzf-git.sh is already installed."
+fi
+
+# Install Starship prompt
+if ! command -v starship &> /dev/null; then
+    echo "Starship prompt is not installed. Installing..."
+    curl -sS https://starship.rs/install.sh | sh
+else
+    echo "Starship prompt is already installed."
+fi
+
+# Install eza
+if ! command -v eza &> /dev/null; then
+    echo "eza is not installed. Installing..."
+    sudo mkdir -p /etc/apt/keyrings
+    wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+    sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+    sudo apt update
+    sudo apt install -y eza
+else
+    echo "eza is already installed."
+fi
+
+# Install zoxide
+if ! command -v zoxide &> /dev/null; then
+    echo "zoxide is not installed. Installing..."
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+else
+    echo "zoxide is already installed."
+fi
+
+echo "Shell tools installation complete."
