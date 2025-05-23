@@ -1,0 +1,154 @@
+# ~/.config/starship.toml
+
+# A minimal left prompt
+format = """$fill\
+$username\
+$hostname\
+$localip\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$docker_context\
+$package\
+$python\
+$rust\
+$vagrant\
+$conda\
+$env_var\
+$custom\
+$os\
+$container\
+$sudo\
+$cmd_duration\
+$jobs\
+$status\
+$line_break\
+$shell\
+$character"""
+
+palette = 'blue_tri'
+
+
+command_timeout = 1500
+
+[fill]
+symbol = ' '
+
+[directory]
+format = '[](fg:prim_3)[$path]($style)[$read_only]($read_only_style)[](fg:prim_3)'
+style = 'bg:prim_3 fg:sec_5'
+read_only_style = 'bg:#29315A fg:#3EC669'
+truncation_length = 6
+truncation_symbol = '…/'
+truncate_to_repo = false
+home_symbol = ' '
+
+[shell]
+format = '[$indicator]($style)'
+disabled = false
+powershell_indicator = " "
+cmd_indicator = ""
+
+[os]
+disabled = false
+format = "[](fg:sec_3)[$symbol]($style)[](fg:sec_3)"
+symbols.Windows = " "
+symbols.Ubuntu  = " "
+style = 'bg:sec_3 fg:sec_1'
+
+[container]
+format = '[](fg:sec_3)[$symbol \[$name\]]($style)[](fg:sec_3)' 
+symbol = ''
+style = 'bg:sec_3 fg:sec_1'
+
+[git_branch]
+format = '[](fg:#29315A)[ $symbol$branch(:$remote_branch)]($style)'
+symbol = ''
+truncation_length = 4
+truncation_symbol = ''
+style = 'bg:#29315A fg:#43CCEA'
+
+[git_status]
+format = '([\[$all_status $ahead_behind\]]($style)[](fg:#29315A))'
+conflicted = '🏳 '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇕⇡${ahead_count}⇣${behind_count} '
+up_to_date = '✓ '
+untracked = '🤷 '
+stashed = '📦 '
+modified = '📝 '
+staged = '[++\($count\)](green)'
+renamed = '👅 '
+deleted = '🗑 '
+style = 'bg:#29315A fg:#43CCEA'
+
+[git_state]
+style = 'bg:#29315A fg:#43CCEA'
+format = '[\($state( $progress_current/$progress_total)\)]($style)'
+
+[cmd_duration]
+min_time = 500
+format = '[](fg:#5b5b2a)[󰔚 ]($style)[$duration]($style)[](fg:#5b5b2a)'
+style = 'bg:#5b5b2a fg:#3EC669'
+
+
+
+[python]
+#format = '[${symbol}${pyenv_prefix}(${version} )(\($env:VIRTUAL_ENV\) )]($style)'
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = ' '
+
+[rust]
+format = '[$symbol ]($style)'
+symbol = '󱘗'
+style = 'bg:orangebg fg:bluesat'
+
+
+[custom.wsl]
+format = '[](fg:sec_3)[$output ]($style)[](fg:sec_3)'
+#command = "echo   $WSL_DISTRO_NAME"
+command = "echo  "
+when = 'echo $WSL_DISTRO_NAME'
+os = 'linux'
+style = 'bg:sec_3 fg:sec_1'
+
+[sudo]
+format = '[](fg:prim_3)[$symbol]($style)[](fg:prim_3)'
+disabled = false
+style = 'bg:prim_3 fg:prim_2'
+
+
+
+[palettes.blue]
+# Overwrite existing color
+bluebg = '#29315A'
+bluesat = '#021B9E'
+orangebg = '#846C32'
+orangesat = '#C58C00'
+greenbg = '#4C752C'
+sec_3 = '#54AD10'
+lilacbg = '#762D42'
+lilacsat = '#B10033'
+
+#https://paletton.com/#uid=33T0F0kjXgwaAJNc8oxDGkvRQuX
+[palettes.blue_tri]
+prim_1 = '#96A0D4'
+prim_2 = '#596086'
+prim_3 = '#29315A'
+prim_4 = '#0A1A70'
+prim_5 = '#0620A9'
+sec_1 = '#FFFAAB'
+sec_2 = '#C3BF79'
+sec_3 = '#504C15'
+sec_4 = '#A39900'
+sec_5 = '#F7E700'
+tri_1 = 'FFCEAB'
+tri_2 = 'C39879'
+tri_3 = '502D15'
+tri_4 = 'A34400'
+tri_5 = 'F76600'
