@@ -1,3 +1,5 @@
+{{ if eq .chezmoi.os "linux" -}}
+
 #!/bin/bash
 
 # This script will be installed to ~/install_shell_tools.sh by chezmoi
@@ -61,9 +63,12 @@ fi
 # Install zoxide
 if ! command -v zoxide &> /dev/null; then
     echo "zoxide is not installed. Installing..."
-    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 else
     echo "zoxide is already installed."
 fi
 
 echo "Shell tools installation complete."
+
+
+{{ end -}}

@@ -1,0 +1,55 @@
+{{- if and (eq .chezmoi.os "windows") (eq .chezmoi.shell "powershell") -}}
+{{- $profile := (env "PROFILE") -}}
+#chezmoi:destination={{ $profile }}
+# # [Console]::OutputEncoding = [Text.Encoding]::UTF8
+
+
+Import-Module posh-git
+
+
+function Invoke-Starship-TransientFunction {
+  &starship module character
+}
+
+
+$ENV:STARSHIP_CONFIG = "$HOME\.config\starship.toml"
+Invoke-Expression (&starship init powershell)
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
+
+
+# configure eza as ls/dir replacement
+$env:EZA_CONFIG_DIR  = 'C:\Users\schotmi\.config\eza'
+function ll {
+    param(
+        [Parameter(ValueFromRemainingArguments = $true)]
+        [string[]]$Args
+    )
+    eza -lah --icons --git --group-directories-first --color-scale @Args
+}
+
+
+
+Enable-TransientPrompt
+
+Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
+
+# Import the Chocolatey Profile that contains the necessary code to enable
+# tab-completions to function for `choco`.
+# Be aware that if you are missing these lines from your profile, tab completion
+# for `choco` will not function.
+# See https://ch0.co/tab-completion for details.
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
+
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+
+(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression
+(& uvx --generate-shell-completion powershell) | Out-String | Invoke-Expression
+{{- end -}}
+
+

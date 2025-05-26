@@ -1,7 +1,7 @@
 # ignore Readme
 Readme*
+README*
 LICENSE
 
 # For now ignore all shell scripts and Docker files
-*.sh
 Dockerfile
