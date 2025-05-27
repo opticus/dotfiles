@@ -61,7 +61,7 @@ fi
 # Install zoxide
 if ! command -v zoxide &> /dev/null; then
     echo "zoxide is not installed. Installing..."
-    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 else
     echo "zoxide is already installed."
 fi

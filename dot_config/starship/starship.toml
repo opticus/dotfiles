@@ -72,6 +72,10 @@ truncation_length = 4
 truncation_symbol = ''
 style = 'bg:#29315A fg:#43CCEA'
 
+[git_commit]
+format = '[\($hash$tag\)]($style)'
+style = 'bg:#29315A fg:#43CCEA'
+
 [git_status]
 format = '([\[$all_status $ahead_behind\]]($style)[](fg:#29315A))'
 conflicted = '🏳 '
