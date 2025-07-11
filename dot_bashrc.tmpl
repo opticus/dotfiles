@@ -15,6 +15,8 @@ HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+# Immediately write each command to the history file and reload history from file
+PROMPT_COMMAND='history -a; history -c; history -r'
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
@@ -123,5 +125,10 @@ fi
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init bash)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# uv shell completion
+if command -v uv &> /dev/null; then
+    eval "$(uv generate-shell-completion bash)"
+fi
 
 {{ end }}
