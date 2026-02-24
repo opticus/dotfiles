@@ -60,6 +60,23 @@ else
     echo "eza is already installed."
 fi
 
+# Install nnn
+if ! command -v nnn &> /dev/null; then
+    echo "nnn is not installed. Installing..."
+    sudo apt install -y nnn
+else
+    echo "nnn is already installed."
+fi
+
+# Install nnn plugins (preview-tui, finder, fzcd, fzhist, icons)
+NNN_PLUGIN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/plugins"
+if [ ! -d "$NNN_PLUGIN_DIR" ] || [ ! -f "$NNN_PLUGIN_DIR/preview-tui" ] || [ ! -f "$NNN_PLUGIN_DIR/finder" ] || [ ! -f "$NNN_PLUGIN_DIR/fzcd" ] || [ ! -f "$NNN_PLUGIN_DIR/fzhist" ] || [ ! -f "$NNN_PLUGIN_DIR/icons" ]; then
+    echo "Required nnn plugins are missing or plugins directory does not exist. Installing/updating all nnn plugins..."
+    sh -c "$(curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs)"
+else
+    echo "Required nnn plugins are already installed."
+fi
+
 # Install zoxide
 if ! command -v zoxide &> /dev/null; then
     echo "zoxide is not installed. Installing..."

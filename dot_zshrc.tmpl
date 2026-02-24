@@ -167,7 +167,38 @@ export EZA_CONFIG="$HOME/.config/eza/theme.toml"
 # Initialize zoxide
 eval "$(zoxide init zsh)"
 
+# nnn configuration: plugins, colors and cd-on-quit
+export NNN_PLUG='p:preview-tui;f:finder;c:fzcd;h:fzhist;i:icons'
+export NNN_COLORS='#18181818'
+export NNN_FCOLORS='c1e2272e006033f7c6d6abc4'
+export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+# Single-instance preview FIFO for preview-tui
+export NNN_FIFO="/tmp/nnn.fifo"
+
+n ()
+{
+    # Block nesting of nnn in subshells
+    [ "${NNNLVL:-0}" -eq 0 ] || {
+        echo "nnn is already running"
+        return
+    }
+
+    # Ensure NNN_TMPFILE is exported so nnn writes the cd command there
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    # Use the real nnn binary even if n is aliased
+    command nnn "$@"
+
+    [ ! -f "$NNN_TMPFILE" ] || {
+        . "$NNN_TMPFILE"
+        rm -f -- "$NNN_TMPFILE" > /dev/null
+    }
+}
+
 KEYTIMEOUT=1000
 {{ end }}
+
+
+
 
 
