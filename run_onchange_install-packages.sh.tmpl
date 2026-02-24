@@ -42,7 +42,7 @@ fi
 # Install Starship prompt
 if ! command -v starship &> /dev/null; then
     echo "Starship prompt is not installed. Installing..."
-    curl -sS https://starship.rs/install.sh | sh
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
 else
     echo "Starship prompt is already installed."
 fi

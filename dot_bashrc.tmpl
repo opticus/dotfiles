@@ -15,6 +15,8 @@ HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+# Immediately write each command to the history file and reload history from file
+PROMPT_COMMAND='history -a; history -c; history -r'
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
@@ -161,5 +163,10 @@ n ()
         rm -f -- "$NNN_TMPFILE" > /dev/null
     }
 }
+
+# uv shell completion
+if command -v uv &> /dev/null; then
+    eval "$(uv generate-shell-completion bash)"
+fi
 
 {{ end }}
