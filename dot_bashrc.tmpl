@@ -126,6 +126,29 @@ export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(starship init bash)"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# fd/fzf-based directory jumper
+if ! command -v fd >/dev/null 2>&1; then
+    if command -v fdfind >/dev/null 2>&1; then
+        alias fd='fdfind'
+    else
+        echo "Warning: 'fd' not found. Install 'fd' (or 'fdfind')."
+    fi
+fi
+
+cd_to_dir() {
+    local selected_dir
+    selected_dir=$(fd -t d --color=always . "$1" | fzf +m --ansi --height 50% --preview 'tree -C {}')
+    if [[ -n "$selected_dir" ]]; then
+        cd "$selected_dir" || return 1
+    fi
+}
+
+# Aliases:
+#  - cdd: search from current directory
+#  - cddh: search from home directory
+alias cdd='cd_to_dir .'
+alias cddh='cd_to_dir "$HOME"'
+
 # nnn configuration: plugins, colors and cd-on-quit
 export NNN_PLUG='p:preview-tui;f:finder;c:fzcd;h:fzhist;i:icons'
 export NNN_COLORS='#3c3c3c3c'

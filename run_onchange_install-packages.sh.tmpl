@@ -39,6 +39,14 @@ else
     echo "fzf-git.sh is already installed."
 fi
 
+# Install fd (fd-find)
+if ! command -v fd &> /dev/null && ! command -v fdfind &> /dev/null; then
+    echo "fd is not installed. Installing fd-find..."
+    sudo apt install -y fd-find
+else
+    echo "fd (or fdfind) is already installed."
+fi
+
 # Install Starship prompt
 if ! command -v starship &> /dev/null; then
     echo "Starship prompt is not installed. Installing..."
