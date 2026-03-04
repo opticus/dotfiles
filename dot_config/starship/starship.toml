@@ -38,6 +38,23 @@ command_timeout = 1500
 [fill]
 symbol = ' '
 
+[username]
+format = '[](fg:tri_3)[$user]($style)'
+style_user = 'bg:tri_3 fg:sec_2'
+show_always = false
+detect_env_vars = ['!TMUX', 'SSH_CONNECTION']
+disabled = false
+
+
+[hostname]
+# Shows a small symbol when connected via SSH; hidden when local
+format = '[$ssh_symbol$hostname](bg:tri_3 fg:sec_2)[](fg:tri_3)'
+ssh_only = true              # Keep hostname visible locally too; set true if you want it only on SSH
+detect_env_vars = ['!TMUX', 'SSH_CONNECTION']
+ssh_symbol = ' '            # Nerd Font symbol; change if you prefer
+trim_at = '.'                 # Show short host (before first dot)
+disabled = false
+
 [directory]
 format = '[](fg:prim_3)[$path]($style)[$read_only]($read_only_style)[](fg:prim_3)'
 style = 'bg:prim_3 fg:sec_5'
@@ -117,7 +134,7 @@ style = 'bg:orangebg fg:bluesat'
 format = '[](fg:sec_3)[$output ]($style)[](fg:sec_3)'
 #command = "echo   $WSL_DISTRO_NAME"
 command = "echo  "
-when = 'echo $WSL_DISTRO_NAME'
+when = '[ -n "$WSL_DISTRO_NAME" ]'
 os = 'linux'
 style = 'bg:sec_3 fg:sec_1'
 
@@ -151,8 +168,9 @@ sec_2 = '#C3BF79'
 sec_3 = '#504C15'
 sec_4 = '#A39900'
 sec_5 = '#F7E700'
-tri_1 = 'FFCEAB'
-tri_2 = 'C39879'
-tri_3 = '502D15'
-tri_4 = 'A34400'
-tri_5 = 'F76600'
+tri_1 = '#FFCEAB'
+tri_2 = '#C39879'
+tri_3 = '#502D15'
+tri_4 = '#A34400'
+tri_5 = '#F76600'
+
